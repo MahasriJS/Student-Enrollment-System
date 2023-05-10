@@ -9,8 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
+
 
 @Entity
 @Table(name = "subject")
@@ -23,14 +22,15 @@ public class Subject {
 	
 	@Column(name = "name", nullable = false)
 	private String name;
-	//@Pattern(regexp = "^{10}$")
-	//@Valid
+	
 	@Column(name = "code", nullable = false, unique = true, length = 10)
 	private String code;
 	
 	@Column(name = "credits", nullable = false)
 	private Integer credits;
 
+	
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "course_id",nullable=false)
 	private Course course;
@@ -87,4 +87,6 @@ public class Subject {
 		this.semester = semester;
 	}
 
+	
+	
 }

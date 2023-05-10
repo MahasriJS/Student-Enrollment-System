@@ -1,13 +1,11 @@
 package com.student.enrollment.service;
 
 import java.util.List;
-
 import com.student.enrollment.dto.StaffDTO;
 import com.student.enrollment.dto.StaffSubjectAssignDTO;
-import com.student.enrollment.dto.StudentDTO;
 import com.student.enrollment.entity.Staff;
 import com.student.enrollment.entity.StaffSubjectAssign;
-import com.student.enrollment.entity.Student;
+import com.student.enrollment.exception.ConstraintException;
 import com.student.enrollment.exception.DuplicateException;
 import com.student.enrollment.exception.NotFoundException;
 import com.student.enrollment.exception.ServiceException;
@@ -16,17 +14,19 @@ public interface StaffService {
 	/**
 	 * 
 	 * @param staff
-	 * @return
+	 * @return {@link Staff}
 	 * @throws ServiceException
 	 * @throws DuplicateException
-	 * @throws NotFoundException 
+	 * @throws NotFoundException
+	 * @throws ConstraintException
 	 */
-	public Staff addStaff(StaffDTO staffDto) throws ServiceException, DuplicateException, NotFoundException;
+	public Staff addStaff(StaffDTO staffDto)
+			throws ServiceException, DuplicateException, NotFoundException, ConstraintException;
 
 	/**
 	 * 
 	 * @param deptId
-	 * @return
+	 * @return List of {@link Staff}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */
@@ -36,11 +36,12 @@ public interface StaffService {
 	/**
 	 * 
 	 * @param staffSubjectAssign
-	 * @return
+	 * @return {@link StaffSubjectAssign}
 	 * @throws ServiceException
-	 * @throws NotFoundException 
+	 * @throws NotFoundException
 	 */
-	public StaffSubjectAssign assignStaffToSubject(StaffSubjectAssignDTO staffSubjectAssigndto) throws ServiceException, NotFoundException;
+	public StaffSubjectAssign saveStaffAssignment(StaffSubjectAssignDTO staffSubjectAssigndto, Long subjectId)
+			throws ServiceException, NotFoundException;
 
 	/**
 	 * 
@@ -49,23 +50,25 @@ public interface StaffService {
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */
-	public void updateAvailability(Long id, boolean newAvailability) throws ServiceException, NotFoundException;
+	public void updateAvailability(Long staffId, Boolean newAvailability) throws ServiceException, NotFoundException;
 
 	/**
 	 * 
 	 * @param id
 	 * @param staff
-	 * @return
+	 * @return {@link Staff}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 * @throws DuplicateException
+	 * @throws ConstraintException
 	 */
-	public Staff updateStaffById(Long id, Staff staff) throws ServiceException, NotFoundException, DuplicateException;
+	public Staff updateStaffById(Long staffId, StaffDTO staff)
+			throws ServiceException, NotFoundException, DuplicateException, ConstraintException;
 
 	/**
 	 * 
 	 * @param staffId
-	 * @return
+	 * @return {@link Staff}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */
@@ -74,18 +77,10 @@ public interface StaffService {
 	/**
 	 * 
 	 * @param subjectId
-	 * @return
+	 * @return List of {@link Staff}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */
 	public List<Staff> getStaffsBySubjectId(Long subjectId) throws ServiceException, NotFoundException;
-	/**
-	 * 
-	 * @param staffDto
-	 * @return
-	 * @throws ServiceException
-	 * @throws NotFoundException
-	 */
-	public Staff staffLogin(StaffDTO staffDto) throws ServiceException, NotFoundException;
 
 }

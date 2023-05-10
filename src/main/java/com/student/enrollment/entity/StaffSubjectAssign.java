@@ -9,13 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "staff_assign_to_subject")
+@Table(name = "staff_assign_to_subject", uniqueConstraints = { @UniqueConstraint(columnNames = { "staff_id", "subject_id" }) })
+
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer" })
-public class StaffSubjectAssign {//staffsubjectAssign
+public class StaffSubjectAssign {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

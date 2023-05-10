@@ -8,8 +8,8 @@ import com.student.enrollment.entity.Enrollment;
 
 public class EnrollmentMapper {
 	public static List<Enrollment> dtoToEntity(List<EnrollmentDTO> enrollmentDto) {
-		List<Enrollment> enrollment= new ArrayList<>();
-		return enrollment;
+		List<Enrollment> enrollments= new ArrayList<>();
+		return enrollments;
 
 	}
 

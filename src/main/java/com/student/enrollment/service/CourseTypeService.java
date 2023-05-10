@@ -8,7 +8,7 @@ public interface CourseTypeService {
 	/**
 	 * Fetching all course types
 	 * 
-	 * @return
+	 * @return List of{@link CourseType}
 	 * @throws ServiceException
 	 */
 

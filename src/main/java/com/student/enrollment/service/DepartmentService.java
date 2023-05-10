@@ -8,7 +8,7 @@ import com.student.enrollment.exception.ServiceException;
 public interface DepartmentService {
 	/**
 	 * 
-	 * @return
+	 * @return List of{ @link Department}
 	 * @throws ServiceException
 	 */
 	public List<Department> getAllDepartments() throws ServiceException;
@@ -16,7 +16,7 @@ public interface DepartmentService {
 	/**
 	 * 
 	 * @param deptId
-	 * @return
+	 * @return { {@link Department}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */

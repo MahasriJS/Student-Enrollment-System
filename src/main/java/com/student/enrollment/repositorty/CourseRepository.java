@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.student.enrollment.entity.Course;
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course,Long>{
-	
+public interface CourseRepository extends JpaRepository<Course, Long> {
+
 	@Query("FROM Course c where c.department.id=:deptId and c.courseType.id=:courseTypeId")
 	List<Course> getCoursesByDeptAndCoursTypeId(@Param("deptId") Long deptId, @Param("courseTypeId") Long courseTypeId);
-	
+
 }

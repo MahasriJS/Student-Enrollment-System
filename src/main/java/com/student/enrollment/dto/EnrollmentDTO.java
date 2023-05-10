@@ -1,5 +1,7 @@
 package com.student.enrollment.dto;
 
+import java.time.LocalDate;
+
 public class EnrollmentDTO {
 	private String studentName;
 	private String staffName;
@@ -11,18 +13,33 @@ public class EnrollmentDTO {
 	private Long courseId;
 	private Long semId;
 	private String subjectCode;
+	private String academicYear;
+	private String email;
+	private String address;
+	private String phno;
+	private LocalDate dob;
+	private LocalDate dateOfJoining;
 	
 	
-//	public EnrollmentDTO(String studentName, String staffName, String subjectName) {
-//		this.studentName = studentName;
-//		this.staffName = staffName;
-//		this.subjectName = subjectName;
-//	}
 	public EnrollmentDTO( String subjectName,String subjectCode,String staffName) {
 		this.subjectName = subjectName;
 		this.subjectCode = subjectCode;
 		this.staffName = staffName;
 	}
+
+	
+
+	public EnrollmentDTO(String studentName, String email, String address, String phno, LocalDate dob,
+			LocalDate dateOfJoining) {
+		super();
+		this.studentName = studentName;
+		this.email = email;
+		this.address = address;
+		this.phno = phno;
+		this.dob = dob;
+		this.dateOfJoining = dateOfJoining;
+	}
+
 
 
 	public EnrollmentDTO() {
@@ -53,10 +70,10 @@ public class EnrollmentDTO {
 		this.deptId = deptId;
 	}
 
-	public EnrollmentDTO(String studentName) {
-		super();
-		this.studentName = studentName;
-	}
+//	public EnrollmentDTO(String studentName) {
+//		super();
+//		this.studentName = studentName;
+//	}
 
 	public EnrollmentDTO(String subjectName, String staffName) {
 		super();
@@ -144,6 +161,72 @@ public class EnrollmentDTO {
 	public void setSubjectCode(String subjectCode) {
 		this.subjectCode = subjectCode;
 	}
+
+
+	public String getAcademicYear() {
+		return academicYear;
+	}
+
+	public void setAcademicYear(String academicYear) {
+		this.academicYear = academicYear;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+	public String getPhno() {
+		return phno;
+	}
+
+
+	public void setPhno(String phno) {
+		this.phno = phno;
+	}
+
+
+
+	public LocalDate getDob() {
+		return dob;
+	}
+
+
+
+	public void setDob(LocalDate dob) {
+		this.dob = dob;
+	}
+
+
+
+	public LocalDate getDateOfJoining() {
+		return dateOfJoining;
+	}
+
+
+
+	public void setDateOfJoining(LocalDate dateOfJoining) {
+		this.dateOfJoining = dateOfJoining;
+	}
+
+ 
+	
 	
 
 }

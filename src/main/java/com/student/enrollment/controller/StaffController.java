@@ -1,5 +1,7 @@
 package com.student.enrollment.controller;
 
+import static java.util.Optional.ofNullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.student.enrollment.dto.HttpStatusResponse;
 import com.student.enrollment.dto.StaffDTO;
-import com.student.enrollment.dto.StaffSubjectAssignDTO;
-import com.student.enrollment.dto.StudentDTO;
 import com.student.enrollment.entity.Staff;
-import com.student.enrollment.entity.StaffSubjectAssign;
-import com.student.enrollment.entity.Student;
+import com.student.enrollment.exception.ConstraintException;
 import com.student.enrollment.exception.DuplicateException;
 import com.student.enrollment.exception.NotFoundException;
 import com.student.enrollment.exception.ServiceException;
@@ -34,20 +33,39 @@ import com.student.enrollment.service.StaffService;
 import com.student.enrollment.utils.ResponseUtils;
 
 @RestController
-@RequestMapping
+@RequestMapping("/staffs")
 @CrossOrigin("*")
 public class StaffController {
 
 	@Autowired
 	private StaffService staffService;
 
-	@PostMapping(value="/staff",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	/**
+	 * To Add Staff
+	 * 
+	 * @param staff
+	 * @return {@link ResponseEntity<HttpStatusResponse>}
+	 * @throws ServiceException
+	 * @throws DuplicateException
+	 * @throws NotFoundException
+	 * @throws ConstraintException
+	 */
+	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatusResponse> addStaff(@RequestBody @Valid StaffDTO staff)
-			throws ServiceException, DuplicateException, NotFoundException {
+			throws ServiceException, DuplicateException, NotFoundException, ConstraintException {
 		staffService.addStaff(staff);
 		return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Staff Added Successfully!!");
 	}
-	@GetMapping(value="department/{deptId}/staffs", produces = MediaType.APPLICATION_JSON_VALUE) // view staff by dept
+
+	/**
+	 * To get Staffs By Department Id
+	 * 
+	 * @param deptId
+	 * @return {@link ResponseEntity<HttpStatusResponse>}
+	 * @throws ServiceException
+	 * @throws NotFoundException
+	 */
+	@GetMapping(value = "department/{deptId}/staffs", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatusResponse> getStaffsByDeptId(@PathVariable Long deptId)
 			throws ServiceException, NotFoundException {
 		List<Staff> staffs = staffService.getStaffsByDeptId(deptId);
@@ -56,59 +74,59 @@ public class StaffController {
 		}
 		return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Staff retrieved Successfully", staffs);
 	}
-	@PostMapping(value="/admin-login", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public  ResponseEntity<HttpStatusResponse> login(@RequestBody StaffDTO staffDto) throws ServiceException, NotFoundException{
-		Staff staff=staffService.staffLogin(staffDto);
-		return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Login Successfully!!",staff);
-		
-	}
-	// view the assigned staff
-	@GetMapping(value = "subjects/{subjectId}/staffs", produces = MediaType.APPLICATION_JSON_VALUE) 
-	public ResponseEntity<HttpStatusResponse> getStaffsBySubjectId(@PathVariable Long subjectId)
-			throws ServiceException, NotFoundException {
-		List<Staff> staffs = staffService.getStaffsBySubjectId(subjectId);
-		if (CollectionUtils.isEmpty(staffs)) {
-			return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Staffs Not Found", new ArrayList<>());
-		}
-		return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Staff retrieved Successfully", staffs);
 
-	}
+	/**
+	 * To Get Staff By Id
+	 * 
+	 * @param staffId
+	 * @return {@link ResponseEntity<HttpStatusResponse>}
+	 * @throws ServiceException
+	 * @throws NotFoundException
+	 */
 
-	@PostMapping(value = "/staff-assign", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatusResponse> assignStaffToSubject(@RequestBody StaffSubjectAssignDTO staffSubjectAssignDto)
-			throws ServiceException, NotFoundException {
-		StaffSubjectAssign assignedStaff = staffService.assignStaffToSubject(staffSubjectAssignDto);
-		return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Staff Assigned Successfully!!", assignedStaff);
-
-	}
-
-	@GetMapping(value = "/staff/{id}", produces = MediaType.APPLICATION_JSON_VALUE) // view staff by id
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatusResponse> getStaffById(@PathVariable("id") Long staffId)
 			throws ServiceException, NotFoundException {
-		Staff staff = staffService.getStaffById(staffId);
-		return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Staff retrieved Successfully!!", staff);
-
+		return ofNullable(staffService.getStaffById(staffId))
+				.map(staff -> ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Staff retrieved Successfully!!",
+						staff))
+				.orElse(ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Staff Not Found", new ArrayList<>()));
 	}
 
-	@PatchMapping(value = "/staff/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatusResponse> deleteStaff(@PathVariable("id") Long staffId, @RequestParam(defaultValue="true",required = false)  boolean isAvailable)
+	/**
+	 * To Update Staff Status
+	 * 
+	 * @param staffId
+	 * @param isAvailable
+	 * @return {@link ResponseEntity<HttpStatusResponse>}
+	 * @throws ServiceException
+	 * @throws NotFoundException
+	 */
+	@PatchMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatusResponse> updateStaffStatus(@PathVariable("id") Long staffId,
+			@RequestParam(defaultValue = "true", required = false) Boolean isAvailable)
 			throws ServiceException, NotFoundException {
-		Staff staff = staffService.getStaffById(staffId);
-		if (staff==null) {
-			return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Students Not Found", new ArrayList<>());
-		}
-		//boolean newAvailability = !staff.getIsAvailable();
 		staffService.updateAvailability(staffId, isAvailable);
-		//staffService.deleteStaff(staffId);
-		return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Staff Deleted Successfully");
+		return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Staff Status Updated Successfully");
 
 	}
 
-	@PutMapping(value = "/staff/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE) // i--
-	public ResponseEntity<HttpStatusResponse> updateStaffById(@PathVariable Long id, @RequestBody Staff staff)
-			throws ServiceException, NotFoundException, DuplicateException {
+	/**
+	 * To Update Staff By Id
+	 * 
+	 * @param id
+	 * @param staff
+	 * @return {@link ResponseEntity<HttpStatusResponse>}
+	 * @throws ServiceException
+	 * @throws NotFoundException
+	 * @throws DuplicateException
+	 * @throws ConstraintException
+	 */
+	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE) // i--
+	public ResponseEntity<HttpStatusResponse> updateStaffById(@PathVariable Long id, @RequestBody StaffDTO staff)
+			throws ServiceException, NotFoundException, DuplicateException, ConstraintException {
 		staffService.updateStaffById(id, staff);
-		return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "staff update successfully");
+		return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Staff Details update successfully");
 
 	}
 

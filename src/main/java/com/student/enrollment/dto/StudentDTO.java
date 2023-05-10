@@ -18,12 +18,13 @@ public class StudentDTO {
 	private Long userTypeId;
 	private String type;
 	
-	public String getUsers() {
+
+	public String getType() {
 		return type;
 	}
 
-	public void setUsers(String users) {
-		type = users;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Long getId() {

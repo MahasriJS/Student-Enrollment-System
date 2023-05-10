@@ -9,7 +9,7 @@ public interface SemesterService {
 	/**
 	 * 
 	 * @param courseTypeId
-	 * @return
+	 * @return List of {@link Semester}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */

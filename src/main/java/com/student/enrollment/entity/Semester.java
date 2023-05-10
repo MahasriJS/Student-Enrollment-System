@@ -2,6 +2,7 @@ package com.student.enrollment.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,10 +18,14 @@ public class Semester {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column(name = "name", nullable = false, length = 25)
 	private String name;
-
-	@ManyToOne
+	
+	@Column(name="display_order",nullable=false)
+	private Integer order;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "coursetype_id", nullable = false)
 	private CourseType courseType;
 
@@ -47,5 +52,13 @@ public class Semester {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public Integer getOrder() {
+		return order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
+	}	
 
 }

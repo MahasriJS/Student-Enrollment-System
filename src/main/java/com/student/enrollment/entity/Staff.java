@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
@@ -22,8 +21,7 @@ import javax.validation.constraints.Pattern;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "staff", uniqueConstraints = { @UniqueConstraint(columnNames = { "phno", "email" }) })
-//@JsonIgnoreProperties(value = { "hibernateLazyInitializer" })
+@Table(name = "staff")
 public class Staff {
 
 	@Id
@@ -35,11 +33,11 @@ public class Staff {
 	private LocalDate dob;
 	@Column(nullable = false)
 	private LocalDate dateOfJoining;
-	@Column(nullable = false, length = 12)
+	@Column(nullable = false, length = 12,unique=true)
 	@Pattern(regexp = "^[0-9]{10,12}$")
 	@Valid
 	private String phno;
-	@Column(nullable = false, length = 45)
+	@Column(nullable = false, length = 45,unique=true)
 	@Email(regexp="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
 	@Valid
 	private String email;
@@ -52,7 +50,7 @@ public class Staff {
 	@Column(nullable = false)
 	private Boolean isAvailable = true;
 	@Column(nullable = false)
-	private String password="temp";
+	private String password;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_type_id", nullable = false)

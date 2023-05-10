@@ -8,19 +8,16 @@ public class FilterOptionDTO {
 	private Long subjectId;
 	private Long studentId;
 	private Long courseTypeId;
-
+	private Integer order;
 	private String email;
-	private String newPassword;
-	private String confirmPassword;
+	private String academicYear;
 	
-	
-	
-	public String getConfirmPassword() {
-		return confirmPassword;
+	public String getAcademicYear() {
+		return academicYear;
 	}
 
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
+	public void setAcademicYear(String academicYear) {
+		this.academicYear = academicYear;
 	}
 
 	public String getEmail() {
@@ -29,14 +26,6 @@ public class FilterOptionDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getNewPassword() {
-		return newPassword;
-	}
-
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
 	}
 
 	public Long getCourseTypeId() {
@@ -94,5 +83,14 @@ public class FilterOptionDTO {
 	public void setSubjectId(Long subjectId) {
 		this.subjectId = subjectId;
 	}
+
+	public Integer getOrder() {
+		return order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
+	}
+	
 
 }

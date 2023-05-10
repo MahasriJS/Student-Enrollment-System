@@ -1,9 +1,6 @@
 package com.student.enrollment.controller;
 
-import java.util.ArrayList;
 import javax.validation.Valid;
-
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,41 +9,38 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import static java.util.Optional.ofNullable;
 
-import com.student.enrollment.dto.FilterOptionDTO;
 import com.student.enrollment.dto.HttpStatusResponse;
+import com.student.enrollment.dto.LoginDTO;
 import com.student.enrollment.exception.NotFoundException;
 import com.student.enrollment.exception.ServiceException;
-import com.student.enrollment.service.CourseService;
+import com.student.enrollment.service.LoginService;
 import com.student.enrollment.utils.ResponseUtils;
 
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("/login")
 @CrossOrigin("*")
-public class CourseController {
-
+public class LoginController {
 	@Autowired
-	private CourseService courseService;
+	private LoginService loginService;
 
 	/**
-	 * To get the courses by the department and course type id
-	 *
-	 * @param filterOption
+	 * To Login
+	 * 
+	 * @param loginDto
+	 * @param userType
 	 * @return {@link ResponseEntity<HttpStatusResponse>}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatusResponse> getCoursesByDeptAndCoursTypeId(
-			@RequestBody @Valid FilterOptionDTO filterOption) throws ServiceException, NotFoundException {
-
-		return ofNullable(courseService.getCoursesByDeptAndCourseTypeId(filterOption))
-				.filter(CollectionUtils::isNotEmpty)
-				.map(courses -> ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Course retrieved Successfully",
-						courses))
-				.orElse(ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Course Not Found", new ArrayList<>()));
+	public ResponseEntity<HttpStatusResponse> login(@RequestBody @Valid LoginDTO loginDto,
+			@RequestParam(defaultValue = "Student", required = false) String userType)
+			throws ServiceException, NotFoundException {
+		Long id = loginService.login(loginDto, userType);
+		return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Logged in Successfully!!", id);
 
 	}
 }

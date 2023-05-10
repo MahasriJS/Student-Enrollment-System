@@ -1,10 +1,13 @@
 package com.student.enrollment.service;
 
 import java.util.List;
+
+import com.student.enrollment.dto.ChangePaswordDTO;
 import com.student.enrollment.dto.FilterOptionDTO;
 import com.student.enrollment.dto.StudentDTO;
 import com.student.enrollment.entity.Student;
 import com.student.enrollment.exception.NotFoundException;
+import com.student.enrollment.exception.ConstraintException;
 import com.student.enrollment.exception.DuplicateException;
 import com.student.enrollment.exception.InvalidPhoneNumberException;
 import com.student.enrollment.exception.ServiceException;
@@ -13,18 +16,20 @@ public interface StudentService {
 	/**
 	 * 
 	 * @param student
-	 * @return
+	 * @return {@link Student}
 	 * @throws ServiceException
 	 * @throws DuplicateException
 	 * @throws InvalidPhoneNumberException
 	 * @throws NotFoundException
+	 * @throws ConstraintException
 	 */
-	public Student addStudent(StudentDTO studentDto) throws ServiceException, DuplicateException, NotFoundException;
+	public Student addStudent(StudentDTO studentDto)
+			throws ServiceException, DuplicateException, NotFoundException, ConstraintException;
 
 	/**
 	 * 
 	 * @param studId
-	 * @return
+	 * @return {@link Student}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */
@@ -37,47 +42,66 @@ public interface StudentService {
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */
-	public void updateAvailability(Long id, boolean newAvailability) throws ServiceException, NotFoundException;
+	public void updateAvailability(Long studentId, Boolean newAvailability) throws ServiceException, NotFoundException;
 
 	/**
 	 * 
 	 * @param id
 	 * @param student
-	 * @return
+	 * @return {@link Student}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 * @throws DuplicateException
+	 * @throws ConstraintException
 	 */
-	public Student updateStudentById(Long id, Student student)
-			throws ServiceException, NotFoundException, DuplicateException;
+	public Student updateStudentById(Long studentId, StudentDTO student)
+			throws ServiceException, NotFoundException, DuplicateException, ConstraintException;
 
 	/**
 	 * 
 	 * @param filterOption
-	 * @return
+	 * @return List of {@link Student}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */
-	public List<Student> getStudentsByDeptAndCourseAndSemId(FilterOptionDTO filterOption)
+	public List<Student> getStudentsByDeptAndCourseAndAcademicYear(FilterOptionDTO filterOption)
 			throws ServiceException, NotFoundException;
 
 	/**
 	 * 
-	 * @param studentDto
-	 * @return 
+	 * @param changePaswordDto
+	 * @return {@link Boolean}
 	 * @throws NotFoundException
 	 * @throws ServiceException
 	 */
 
-	public Student studentLogin(StudentDTO studentDto) throws ServiceException, NotFoundException;
+	public boolean changePassword(ChangePaswordDTO changePaswordDto) throws NotFoundException, ServiceException;
+
 	/**
 	 * 
 	 * @param filterOption
-	 * @return
+	 * @return {@link Boolean}
 	 * @throws NotFoundException
 	 * @throws ServiceException
 	 */
 
-	public boolean changePassword(FilterOptionDTO filterOption) throws NotFoundException, ServiceException;
-	
+	public Boolean upgradeStudent(FilterOptionDTO filterOption) throws NotFoundException, ServiceException;
+
+	/**
+	 * Fetch Distinct Academic Year
+	 * 
+	 * @return List of {@link String}
+	 * @throws ServiceException
+	 */
+
+	public List<String> getAllAcademicYear() throws ServiceException;
+
+	/**
+	 * 
+	 * @param studentId
+	 * @return {@link Boolean}
+	 * @throws ServiceException
+	 */
+
+	public Boolean findWhetherScheduleEnrolled(Long studentId) throws ServiceException;
 }

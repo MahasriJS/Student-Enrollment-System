@@ -18,9 +18,7 @@ public class UserType {
     private Long id;
 	@Column(name="type",nullable=true,unique=true)
 	private String type;
-	public UserType(Long userTypeId) {
-		
-	}
+	
 	public UserType() {
 		super();
 	}
@@ -30,13 +28,12 @@ public class UserType {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getUsers() {
+	public String getType() {
 		return type;
 	}
-	public void setUsers(String users) {
-		this.type = users;
+	public void setType(String type) {
+		this.type = type;
 	}
-
 	
 
 }

@@ -10,11 +10,12 @@ public interface CourseService {
 	/**
 	 * 
 	 * @param filterOption
-	 * @return
+	 * @return List of {@link Course}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */
 
-	List<Course> getCoursesByDeptAndCoursTypeId(FilterOptionDTO filterOption) throws ServiceException, NotFoundException;
+	List<Course> getCoursesByDeptAndCourseTypeId(FilterOptionDTO filterOption)
+			throws ServiceException, NotFoundException;
 
 }

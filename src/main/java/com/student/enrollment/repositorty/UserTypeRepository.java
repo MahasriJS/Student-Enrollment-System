@@ -10,10 +10,7 @@ import com.student.enrollment.entity.UserType;
 @Repository
 public interface UserTypeRepository extends JpaRepository<UserType, Long> {
 
-	 @Query("SELECT ut.id FROM UserType ut WHERE ut.type = 'student'")
-	 Long findStudentUserTypeByName();
-	 @Query("SELECT ut.id FROM UserType ut WHERE ut.type = 'staff'")
-	 Long findStaffUserTypeByName();
-
+	@Query("SELECT ut.id FROM UserType ut WHERE ut.type = :userType")
+	Long findUserTypeByName(@Param("userType") String userType);
 
 }

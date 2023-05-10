@@ -13,27 +13,28 @@ public interface SubjectService {
 	/**
 	 * 
 	 * @param subject
-	 * @return
+	 * @return {@link Subject}
 	 * @throws ServiceException
-	 * @throws NotFoundException 
-	 * @throws DuplicateException 
+	 * @throws NotFoundException
+	 * @throws DuplicateException
 	 */
 	public Subject addSubject(SubjectDTO subject) throws ServiceException, NotFoundException, DuplicateException;
+
 	/**
 	 * 
 	 * @param filterOption
-	 * @return
+	 * @return List of {@link Subject}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */
 	List<Subject> getSubjectsByCourseAndSemId(FilterOptionDTO filterOption) throws ServiceException, NotFoundException;
+
 	/**
 	 * 
 	 * @param subjectId
-	 * @return
+	 * @return {@link Subject}
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */
 	public Subject getSubjectById(Long subjectId) throws ServiceException, NotFoundException;
-
 }

@@ -10,7 +10,7 @@ import com.student.enrollment.dto.HttpStatusResponse;
 import com.student.enrollment.utils.ResponseUtils;
 
 @ControllerAdvice
-public class ExceptionHandlers {
+public class ExceptionHandle {
 
 	@ExceptionHandler(ServiceException.class)
 	public ResponseEntity<HttpStatusResponse> handleServiceException(ServiceException ex) {
@@ -24,6 +24,10 @@ public class ExceptionHandlers {
 
 	@ExceptionHandler(NotFoundException.class)
 	public ResponseEntity<HttpStatusResponse> handleNotFoundException(NotFoundException ex) {
+		return ResponseUtils.httpStatusException(HttpStatus.UNPROCESSABLE_ENTITY.value(), ex.getMessage());
+	}
+	@ExceptionHandler(ConstraintException.class)
+	public ResponseEntity<HttpStatusResponse> handleNotFoundException(ConstraintException ex) {
 		return ResponseUtils.httpStatusException(HttpStatus.UNPROCESSABLE_ENTITY.value(), ex.getMessage());
 	}
 

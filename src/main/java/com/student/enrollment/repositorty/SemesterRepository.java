@@ -13,6 +13,8 @@ import com.student.enrollment.entity.Semester;
 public interface SemesterRepository extends JpaRepository<Semester, Long> {
 
 	@Query("SELECT s FROM Semester s WHERE s.courseType.id = :courseTypeId")
-	List<Semester> findSemesterByCourseTypeId(@Param("courseTypeId") Long courseTypeId);
+	List<Semester> findSemestersByCourseTypeId(@Param("courseTypeId") Long courseTypeId);
 
+	@Query("From Semester s where s.courseType.id=:courseTypeId and s.order=:order")
+	Semester getSemesterByOrderAndCourseTypeId(@Param("courseTypeId") Long courseTypeId, @Param("order") Integer order);
 }

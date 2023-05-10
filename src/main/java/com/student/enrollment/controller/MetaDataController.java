@@ -15,30 +15,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.student.enrollment.dto.HttpStatusResponse;
 import com.student.enrollment.exception.ServiceException;
-import com.student.enrollment.service.CourseTypeService;
+import com.student.enrollment.service.StudentService;
 import com.student.enrollment.utils.ResponseUtils;
 
 @RestController
-@RequestMapping("/course-types")
+@RequestMapping("/meta-data")
 @CrossOrigin("*")
-public class CourseTypeController {
+public class MetaDataController {
 
 	@Autowired
-	private CourseTypeService courseTypeService;
+	private StudentService studentService;
 
 	/**
-	 * To get Course Types
+	 * To Get All Academic Years
 	 * 
 	 * @return {@link ResponseEntity<HttpStatusResponse>}
 	 * @throws ServiceException
 	 */
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatusResponse> getAllCourseTypes() throws ServiceException {
-
-		return ofNullable(courseTypeService.getAllCourseTypes()).filter(CollectionUtils::isNotEmpty)
-				.map(courseTypes -> ResponseUtils.getSuccessResponse(HttpStatus.OK.value(),
-						"Course Type retrieved Successfully", courseTypes))
-				.orElse(ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Course Types Not Found",
+	@GetMapping(value = "/academic-year", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatusResponse> getAllAcademicYear() throws ServiceException {
+		return ofNullable(studentService.getAllAcademicYear()).filter(CollectionUtils::isNotEmpty)
+				.map(academicYears -> ResponseUtils.getSuccessResponse(HttpStatus.OK.value(),
+						"Academic Years Retrieved  Successfully", academicYears))
+				.orElse(ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Academic Years Not Found",
 						new ArrayList<>()));
 	}
+
 }
