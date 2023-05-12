@@ -31,11 +31,11 @@ public class Student {
 	private LocalDate dob;
 	@Column(nullable = false)
 	private LocalDate dateOfJoining;
-	@Column(nullable = false, length = 12,unique=true)
+	@Column(nullable = false, length = 12, unique = true)
 	@Pattern(regexp = "^[0-9]{10,12}$")
 	@Valid
 	private String phno;
-	@Column(nullable = false, length = 45,unique=true)
+	@Column(nullable = false, length = 45, unique = true)
 	@Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
 	@Valid
 	private String email;
@@ -47,7 +47,6 @@ public class Student {
 	private String academicYear;
 	@Column(nullable = false)
 	private String password;
-	
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_type_id", nullable = false)

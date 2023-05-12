@@ -9,9 +9,4 @@ public class ConstraintException extends Exception {
         super(message);
     }
 
-	public Set<ConstraintViolation<?>> getConstraintViolations() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

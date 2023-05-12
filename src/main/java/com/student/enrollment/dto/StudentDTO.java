@@ -2,8 +2,11 @@ package com.student.enrollment.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotNull;
+
 public class StudentDTO {
 	private Long id;
+	@NotNull
 	private String name;
 	private LocalDate dob;
 	private LocalDate dateOfJoining;

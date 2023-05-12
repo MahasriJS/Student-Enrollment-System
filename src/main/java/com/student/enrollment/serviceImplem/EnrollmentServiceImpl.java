@@ -151,7 +151,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 		}
 	}
 
-	public Boolean isEnrollmentAvailable(FilterOptionDTO filterOption) throws ServiceException, EnrollmentException {
+	public Boolean isEnrollmentAvailable(FilterOptionDTO filterOption) throws ServiceException {
 		try {
 			logger.info("Checking Enrollments Availability for Student");
 			Long studentCount = studentRepository.countStudentsByDepartmentCourseAndSemesterId(filterOption.getDeptId(),
@@ -161,10 +161,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 			Long enrollmentCount = enrollmentRepository
 					.countEnrollmentBySubjectAndStaffById(filterOption.getSubjectId(), filterOption.getStaffId());
 			Long availability = studentCount / staffCount;
-			if (enrollmentCount > availability) {
-				return false;
-			}
-			return true;
+			return (enrollmentCount < availability);
 		} catch (Exception e) {
 			logger.error("Service Exception");
 			throw new ServiceException(e.getMessage());

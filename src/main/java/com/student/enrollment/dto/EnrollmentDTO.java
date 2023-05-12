@@ -70,11 +70,6 @@ public class EnrollmentDTO {
 		this.deptId = deptId;
 	}
 
-//	public EnrollmentDTO(String studentName) {
-//		super();
-//		this.studentName = studentName;
-//	}
-
 	public EnrollmentDTO(String subjectName, String staffName) {
 		super();
 		this.subjectName = subjectName;

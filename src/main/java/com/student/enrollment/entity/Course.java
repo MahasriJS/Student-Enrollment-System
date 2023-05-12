@@ -22,7 +22,7 @@ public class Course {
 	private String name;
 	@Column(name = "code", nullable = false, unique = true, length = 10)
 	private String code;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "department_id", nullable = false)
 	private Department department;

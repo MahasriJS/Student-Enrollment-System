@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,11 +98,11 @@ public class StaffServiceImpl implements StaffService {
 		}
 	}
 
-	public List<Staff> getStaffsByDeptId(Long deptId) throws ServiceException, NotFoundException {
+	public List<Staff> getStaffsByDeptId(List<Long> deptIds) throws ServiceException, NotFoundException {
 		try {
 			logger.info("Fetching Staffs By Department Id");
-			if (Objects.nonNull(deptId)) {
-				return staffRepository.getStaffsByDeptId(deptId);
+			if (CollectionUtils.isNotEmpty(deptIds)) {
+				return staffRepository.getStaffsByDeptId(deptIds);
 
 			} else {
 				throw new NotFoundException("Invalid Department Id");

@@ -65,7 +65,7 @@ public class EnrollmentController {
 	 */
 	@PostMapping(value = "/available", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatusResponse> enrollmentAvailability(@RequestBody FilterOptionDTO filterOption)
-			throws ServiceException, EnrollmentException {
+			throws ServiceException {
 		return ofNullable(enrollmentService.isEnrollmentAvailable(filterOption))
 				.map(isEnrollmentAvailable -> ResponseUtils.getSuccessResponse(HttpStatus.OK.value(),
 						"Enrollement is Available!!", isEnrollmentAvailable))
@@ -126,4 +126,5 @@ public class EnrollmentController {
 				.orElse(ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Enrollments Not Found",
 						new ArrayList<>()));
 	}
+	
 }

@@ -65,10 +65,10 @@ public class StaffController {
 	 * @throws ServiceException
 	 * @throws NotFoundException
 	 */
-	@GetMapping(value = "department/{deptId}/staffs", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatusResponse> getStaffsByDeptId(@PathVariable Long deptId)
+	@PostMapping(value = "/ids", produces = MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatusResponse> getStaffsByDeptId(@RequestBody List<Long> deptIds)
 			throws ServiceException, NotFoundException {
-		List<Staff> staffs = staffService.getStaffsByDeptId(deptId);
+		List<Staff> staffs = staffService.getStaffsByDeptId(deptIds);
 		if (CollectionUtils.isEmpty(staffs)) {
 			return ResponseUtils.getSuccessResponse(HttpStatus.OK.value(), "Staffs Not Found", new ArrayList<>());
 		}

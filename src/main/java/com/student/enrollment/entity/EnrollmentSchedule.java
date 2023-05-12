@@ -14,18 +14,19 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "schedule_enrollment", uniqueConstraints = { @UniqueConstraint(columnNames = { "academicYear", "department_id", "course_id", "semester_id" }) })
+@Table(name = "schedule_enrollment", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "academicYear", "department_id", "course_id", "semester_id" }) })
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer" })
 public class EnrollmentSchedule {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
-	private Boolean isStarted=false;
+	private Boolean isStarted = false;
 	@Column(nullable = false)
 	private String academicYear;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "department_id", nullable = false)
 	private Department department;
@@ -86,5 +87,4 @@ public class EnrollmentSchedule {
 		this.semester = semester;
 	}
 
-	
 }

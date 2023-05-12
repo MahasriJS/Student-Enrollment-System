@@ -302,10 +302,7 @@ public class StudentServiceImpl implements StudentService {
 				isEligibleForUpgrade = false;
 			}
 			if (BooleanUtils.isTrue(isEligibleForUpgrade)) {
-				if (CollectionUtils.isNotEmpty(students) && Objects.nonNull(filterOption.getSemId())) {// all students
-																										// -->
-																										// enrolled-->
-																										// then upgrade
+				if (CollectionUtils.isNotEmpty(students) && Objects.nonNull(filterOption.getSemId())) {
 					for (Student student : students) {
 						Semester semester = semesterRepository.findById(student.getSemester().getId()).orElse(null);
 						if (Objects.nonNull(semester)) {

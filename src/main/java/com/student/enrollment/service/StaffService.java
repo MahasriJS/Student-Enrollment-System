@@ -31,7 +31,7 @@ public interface StaffService {
 	 * @throws NotFoundException
 	 */
 
-	List<Staff> getStaffsByDeptId(Long deptId) throws ServiceException, NotFoundException;
+	List<Staff> getStaffsByDeptId(List<Long> deptIds) throws ServiceException, NotFoundException;
 
 	/**
 	 * 

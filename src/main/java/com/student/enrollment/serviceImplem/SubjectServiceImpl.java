@@ -73,7 +73,7 @@ public class SubjectServiceImpl implements SubjectService {
 			Long subjectCount = subjectRepository.subjectCount(subjectDto.getCourseId(), subjectDto.getSemesterId());
 			if (Objects.nonNull(subjectDto) && Objects.nonNull(subjectDto.getCourseId())
 					&& Objects.nonNull(subjectDto.getSemesterId())) {
-				if (subjectCount <= 8 && subjectDto.getSemesterId() <= 8
+				if (subjectCount < 8 && subjectDto.getSemesterId() <= 8
 						|| subjectCount <= 4 && subjectDto.getSemesterId() > 8) {
 					Course course = courseRepository.findById(subjectDto.getCourseId()).orElse(null);
 					subject.setCourse(course);

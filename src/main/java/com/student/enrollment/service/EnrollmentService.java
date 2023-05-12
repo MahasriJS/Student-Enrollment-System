@@ -45,7 +45,7 @@ public interface EnrollmentService {
 	 * @throws ServiceException
 	 * @throws EnrollmentException
 	 */
-	public Boolean isEnrollmentAvailable(FilterOptionDTO filterOption) throws ServiceException, EnrollmentException;
+	public Boolean isEnrollmentAvailable(FilterOptionDTO filterOption) throws ServiceException;
 
 	/**
 	 * 

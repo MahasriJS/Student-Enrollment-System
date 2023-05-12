@@ -1,6 +1,5 @@
 package com.student.enrollment.entity;
 
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +13,8 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "staff_assign_to_subject", uniqueConstraints = { @UniqueConstraint(columnNames = { "staff_id", "subject_id" }) })
+@Table(name = "staff_assign_to_subject", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "staff_id", "subject_id" }) })
 
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer" })
 public class StaffSubjectAssign {
@@ -53,7 +53,5 @@ public class StaffSubjectAssign {
 	public void setSubject(Subject subject) {
 		this.subject = subject;
 	}
-
-
 
 }

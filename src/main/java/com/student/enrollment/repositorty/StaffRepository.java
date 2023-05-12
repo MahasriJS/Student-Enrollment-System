@@ -18,8 +18,8 @@ public interface StaffRepository extends JpaRepository<Staff, Long> {
 
 	boolean existsByPhno(String phno);
 
-	@Query("FROM Staff s where s.department.id=:deptId")
-	List<Staff> getStaffsByDeptId(@Param("deptId") Long deptId);
+	@Query("FROM Staff s where s.department.id in (:deptIds)")
+	List<Staff> getStaffsByDeptId(List<Long> deptIds);
 
 	@Query("SELECT s FROM Staff s JOIN  s.teachings t WHERE t.subject.id = :subjectId")
 	List<Staff> getStaffsBySubjectId(@Param("subjectId") Long subjectId);
